@@ -37,6 +37,6 @@ public class StringBuilderDemo1 {
         System.out.println(str3.getClass());//class java.lang.String
         //先转成拼接好的字符串，在打印。
 
-        //虽然打印的结果一样，但是类型不同！
+        //虽然打印的结果一样，但是类型不同！！
     }
 }
