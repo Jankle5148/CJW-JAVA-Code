@@ -14,6 +14,5 @@ public class ForDemo1 {
         //用i++则是另外的情况
 
         //快捷输入：fori，然后修改循环次数
-
     }
 }
