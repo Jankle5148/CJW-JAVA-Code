@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ==================== 坐标 ==================== -->
+    <!-- packaging 必须是 pom，父工程不产出 jar，只负责统一配置和聚合 -->
+    <groupId>pers.cjw</groupId>
+    <artifactId>cjw-java-code</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>CJW-JAVA-Code</name>
+    <description>个人 Java 学习仓库：语法基础、面向对象、集合框架、算法练习</description>
+
+    <!-- ==================== 子模块列表 ==================== -->
+    <!-- 每完成一个模块的 Maven 化（加子 pom + 源码迁到 src/main/java），就往这里加一行，
+         例如：<module>Day-02</module>
+         在子模块 pom 建好之前不要加进来，否则 mvn 会直接报错 -->
+    <modules>
+        <module>Day-02</module>
+        <module>Day-03</module>
+        <module>Day-04</module>
+        <module>Day-05</module>
+        <module>Day-06</module>
+        <module>Day-07</module>
+        <module>Day-08</module>
+        <module>Day-09</module>
+        <module>Day-10</module>
+        <module>Day-11</module>
+        <module>Day-12</module>
+        <module>Day-13</module>
+        <module>Day-14</module>
+        <module>Day-15</module>
+        <module>Day-16</module>
+        <module>Day-18</module>
+        <module>Day-19</module>
+        <module>Day-20</module>
+        <module>Day-21</module>
+        <module>Day-22</module>
+        <module>Day-23</module>
+        <module>Day-24</module>
+        <module>Day-25</module>
+        <module>Day-26</module>
+        <module>HuaweiODTest</module>
+        <module>Sort</module>
+    </modules>
+
+    <!-- ==================== 全局属性 ==================== -->
+    <properties>
+        <java.version>21</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+
+        <!-- 源码里有大量中文注释，必须显式指定 UTF-8。
+             本机默认 locale 是 zh_CN，不配置的话 Windows 下会按 GBK 读源码，导致中文乱码甚至编译失败 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <!-- ==================== 公共依赖 ==================== -->
+    <!-- 这里声明的依赖会被【所有】子模块自动继承。
+         版本由下面 dependencyManagement 里的 junit-bom 统一管理，所以不用写 <version> -->
+    <dependencies>
+        <!-- JUnit 5：test 作用域，只参与测试的编译和运行，不会被打进最终产物 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- ==================== 依赖版本统一管理 ==================== -->
+    <!-- 这里只声明"版本"，不实际引入依赖。子模块用到时自己写 <dependency>，可以省略 <version> -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- JUnit 5：用 BOM 统一管理 junit-jupiter 等一组构件的版本 -->
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>5.13.4</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Gson：Day-18 用它演示"用第三方工具做深克隆"。
+                 原先是以本地 jar（Day-18/lib/gson-2.6.2.jar）+ IDE library 的方式引入的，
+                 现在改成标准 Maven 依赖 -->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>2.6.2</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- ==================== 插件版本统一管理 ==================== -->
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.13.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.5.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

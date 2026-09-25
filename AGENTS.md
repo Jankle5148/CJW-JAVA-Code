@@ -4,30 +4,53 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 ## Project Overview
 
-This is a personal Java learning repository. It has no Maven/Gradle build system — it is an IntelliJ IDEA project (`.idea/`, `.iml`). Each module is listed in `.idea/modules.xml`.
+This is a personal Java learning repository, built as a **Maven multi-module project**. The root `pom.xml` is a parent POM *and* aggregator: it defines the Java version, source encoding, and every dependency/plugin version. Each `Day-NN/` module declares only a `<parent>` reference plus its `artifactId` — no versions, no build config.
 
 ## Project Structure
 
-Each `Day-NN/` directory is a self-contained IntelliJ module with its own `src/` folder. The package convention is `pers.cjw.<topic>`. Most days have a `Main.java` entry point plus demo/practice classes and manual test classes under sub-packages.
+Each `Day-NN/` directory is a self-contained Maven module using the standard layout:
 
-Additional directories:
+```
+Day-NN/
+├── pom.xml
+└── src/
+    ├── main/java/          ← sources; package convention is pers.cjw.<topic>
+    └── main/resources/     ← runtime resources (only Day-25 / Day-26 have these)
+```
+
+Additional modules:
 - `Sort/` — sorting algorithm implementations (bubble, selection, insertion, shell, merge sort)
 - `HuaweiODTest/` — Huawei OD exam practice problems (uses `jikao` and `shousi` packages, not `pers.cjw.*`)
-- `LeetCode/` — referenced in `modules.xml` but directory does not exist yet
-- `src/` — top-level Main.java (simple Hello World)
-- `out/` — compiled `.class` output (gitignored)
 
-Note: There is no Day-17 directory (gap between Day-16 and Day-18).
+Two things that look wrong but aren't:
+
+- There is no Day-17 module (gap between Day-16 and Day-18).
+- Many modules have a `Main.java` / `App.java` sitting in the **default package** (no `package` declaration). This compiles and runs fine under Maven. Leave them alone unless asked — named-package classes cannot import default-package classes, so nothing depends on them.
 
 ## Build & Run
 
-Since this is a pure IntelliJ project with no build tool:
-- **Compile & run**: Open in IntelliJ IDEA, right-click any `Main.java` → Run.
-- Each `Day-NN/src/` folder must be marked as a sources root individually (already configured in `.idea/modules.xml`).
-- **JDK**: Uses inherited JDK from the IDE (no pinned version in project files).
-- Compiled output goes to the project-level `out/` directory.
+All commands run from the repository root.
 
-There is no test framework (no JUnit). Classes named `Test.java` or `*Test*.java` are manual demos with their own `main` methods.
+- **Compile everything**: `mvn clean compile`
+- **Compile one module**: `mvn -pl Day-25 compile`
+- **Package one module**: `mvn -pl Day-25 package`
+- **Inspect dependencies**: `mvn -pl Day-18 dependency:tree`
+- **Run a class**: `java -cp "Day-NN/target/classes;<deps>" <fully.qualified.ClassName>`
+
+Build settings, all set once in the root `pom.xml` and inherited everywhere:
+
+- **Java 21** via `maven.compiler.release`.
+- **Source encoding UTF-8** — required, not optional. The sources are full of Chinese comments and the machine's default locale is `zh_CN`; without this Maven reads them as GBK and compilation breaks.
+- **Versions are managed centrally**: JUnit 5 (`junit-bom`) and Gson are declared in the parent's `<dependencyManagement>`. Modules reference them by `groupId`/`artifactId` only.
+- **Local Maven repository is `D:\maven_repository`** (set in `D:\maven\apache-maven-3.9.16\conf\settings.xml`), not the default `~/.m2`.
+
+There are no tests yet, but the scaffolding is ready. Every module has an empty `src/test/java` (held in git by a `.gitkeep` — git does not track empty directories), and the root `pom.xml` declares JUnit 5 (`org.junit.jupiter:junit-jupiter`, test scope) in its `<dependencies>`, so **all modules inherit it automatically**. To add a test, just write a `*Test` class under `src/test/java` mirroring the package of the class under test and run `mvn test`. No per-module dependency declaration needed.
+
+Note: many classes carry a `main` method used as a manual self-test shell. When you write real tests for such a class, drop the `main` and test the actual methods instead.
+
+## Resources
+
+Day-25 and Day-26 are Swing mini-games. Their images live under `src/main/resources/...` mirroring the package path, and are loaded via `getClass().getResource("/pers/cjw/...")` — never via relative file paths, so they work regardless of the working directory.
 
 ## Coding Topics by Day
 
@@ -43,7 +66,7 @@ There is no test framework (no JUnit). Classes named `Test.java` or `*Test*.java
 | Day-14 | Polymorphism, packages, final, permissions, code blocks |
 | Day-15 | Abstract classes, interfaces, inner classes |
 | Day-16 | Additional practice / review |
-| Day-18 | API utilities (Runtime, Object, Objects, Cloneable, BigInteger, BigDecimal, Date) |
+| Day-18 | API utilities (Runtime, Object, Objects, Cloneable, BigInteger, BigDecimal, Date) — plus Gson for deep cloning |
 | Day-19 | Regex API (Pattern, Matcher) |
 | Day-20 | API (Integer, String, StringBuilder, Math, System, Runtime) |
 | Day-21 | API (Date, SimpleDateFormat, Calendar, JDK8 time classes, packaging) |

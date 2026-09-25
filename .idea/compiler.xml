@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="8" />
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Day-18" />
+        <module name="Day-19" />
+        <module name="Day-10" />
+        <module name="Day-11" />
+        <module name="Day-12" />
+        <module name="Day-13" />
+        <module name="Day-14" />
+        <module name="Day-15" />
+        <module name="Day-16" />
+        <module name="HuaweiODTest" />
+        <module name="Sort" />
+        <module name="Day-07" />
+        <module name="Day-08" />
+        <module name="Day-09" />
+        <module name="Day-21" />
+        <module name="Day-22" />
+        <module name="Day-23" />
+        <module name="Day-02" />
+        <module name="Day-24" />
+        <module name="Day-03" />
+        <module name="Day-25" />
+        <module name="Day-04" />
+        <module name="Day-26" />
+        <module name="Day-05" />
+        <module name="Day-06" />
+        <module name="Day-20" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="21" />
   </component>
 </project>
