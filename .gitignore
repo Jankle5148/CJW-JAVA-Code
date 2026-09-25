@@ -3,6 +3,9 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+# Git Toolbox 插件的个人提交校验设置，只跟本机 IDE 有关，不随仓库共享
+.idea/git_toolbox_prj.xml
+
 ### Maven ###
 target/
 
