@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承根 pom：Java 版本、编码、依赖/插件版本都在那里统一管好了，
+         所以这里不需要再写 <groupId>、<version>，也不用写任何 build 配置 -->
+    <parent>
+        <groupId>pers.cjw</groupId>
+        <artifactId>cjw-java-code</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>Day-21</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Day-21</name>
+
+    <!-- 本模块暂时没有任何第三方依赖，用到时再往这里加 <dependencies> -->
+</project>
